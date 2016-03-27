@@ -27,10 +27,15 @@
 需要给`createProgressBar`传递一个选项对象
 
 `wrapper`: 包裹着需要被滚动的div的父级div,
+
 `target`: 有滚动内容的div
+
 `backgroundColor`: 滚动条的背景色,默认为`#E3E3E3`
+
 `color`: 滚动条的颜色,默认为`#EF6851`,
+
 `opacity`: 滚动条在静止状态下的透明度,默认为`0.6`的透明度
+
 `showScrollBar`:  是否显示滚动条,值为`true`或则是`false`,默认显示滚动条
 
 
