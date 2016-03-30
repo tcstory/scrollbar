@@ -46,10 +46,10 @@ function createProgressBar(opts) {
         opts.backgroundColor = opts.backgroundColor || '#E3E3E3';
         opts.opacity = opts.opacity || 0.6;
         opts.color = opts.color || '#EF6851';
-        if (opts.showScrollbar !== false) {
-            opts.showScrollbar = 'visible';
+        if (opts.showScrollBar !== false) {
+            opts.showScrollBar = 'visible';
         } else {
-            opts.showScrollbar = 'hidden';
+            opts.showScrollBar = 'hidden';
         }
     }
 
@@ -67,7 +67,7 @@ function createProgressBar(opts) {
             'position: absolute;' +
             'right: .25rem;' +
             'top: .25rem;' +
-            'visibility:' + opts.showScrollbar +';'+
+            'visibility:' + opts.showScrollBar +';'+
             '}' +
             '.progressBar__tc' + timestamp + '.active {' +
             'opacity: 1;' +
