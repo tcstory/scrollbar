@@ -84,3 +84,7 @@ function createScrollBar(opts) {
     }
 
 }
+
+if (typeof module !== 'undefined') {
+    module.exports = createScrollBar;
+}
