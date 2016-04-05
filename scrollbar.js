@@ -2,7 +2,7 @@
  * Created by tcstory on 3/27/16.
  */
 
-function createProgressBar(opts) {
+function createScrollBar(opts) {
     "use strict";
 
     if (typeof opts.wrapper === 'undefined' || typeof opts.target === 'undefined') {
@@ -12,30 +12,30 @@ function createProgressBar(opts) {
         var target = opts.target;
         setDefaultValue(opts);
         var timestamp = Date.now();
-        var progressBar = document.createElement('div');
-        progressBar.className = 'progressBar__tc' + timestamp;
-        wrapper.appendChild(progressBar);
+        var scrollBar = document.createElement('div');
+        scrollBar.className = 'scrollBar__tc' + timestamp;
+        wrapper.appendChild(scrollBar);
         var slider = document.createElement('div');
         slider.className = 'slider__tc' + timestamp;
-        progressBar.appendChild(slider);
+        scrollBar.appendChild(slider);
         target.addEventListener('wheel', handleWheel);
 
         injectCSS(timestamp, opts);
     }
 
 
-    function activateProgressBar() {
-        clearTimeout(activateProgressBar.timeId);
-        progressBar.classList.add('active');
-        activateProgressBar.timeId = setTimeout(function () {
-            progressBar.classList.remove('active');
+    function activateScrollBar() {
+        clearTimeout(activateScrollBar.timeId);
+        scrollBar.classList.add('active');
+        activateScrollBar.timeId = setTimeout(function () {
+            scrollBar.classList.remove('active');
         }, 50);
     }
 
     function handleWheel(ev) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
-        activateProgressBar();
+        activateScrollBar();
         var distance = target.scrollHeight - target.clientHeight;
         var scrollTop = target.scrollTop;
         target.scrollTop = scrollTop + ev.deltaY;
@@ -55,7 +55,7 @@ function createProgressBar(opts) {
 
     function injectCSS(timestamp, opts) {
         var sliderStyleText =
-            '.progressBar__tc' + timestamp + ' {' +
+            '.scrollBar__tc' + timestamp + ' {' +
             'background-color:' + opts.backgroundColor + ';' +
             'border-radius: .25rem;' +
             'opacity:' + opts.opacity + ';' +
@@ -69,10 +69,10 @@ function createProgressBar(opts) {
             'top: .25rem;' +
             'visibility:' + opts.showScrollBar +';'+
             '}' +
-            '.progressBar__tc' + timestamp + '.active {' +
+            '.scrollBar__tc' + timestamp + '.active {' +
             'opacity: 1;' +
             '}' +
-            '.progressBar__tc' + timestamp + ' .slider__tc' + timestamp + ' {' +
+            '.scrollBar__tc' + timestamp + ' .slider__tc' + timestamp + ' {' +
             'background-color:' + opts.color + ';' +
             'border-radius: .25rem;' +
             'cursor: pointer;' +

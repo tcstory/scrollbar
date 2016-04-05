@@ -13,7 +13,7 @@
         <!--这是生成的滚动条出现的位置-->
     </div>
       
-    createProgressBar({
+    createScrollBar({
         wrapper: document.querySelector('.list-wrapper'),
         target: document.querySelector('.list')
     })
@@ -26,7 +26,7 @@
 2. `list`的`width`和`height`都要设置为100%,并且`overflow:hidden`
 
 ### 参数
-需要给`createProgressBar`传递一个选项对象
+需要给`createScrollBar`传递一个选项对象
 
 `wrapper`: 包裹着需要被滚动的div的父级div,
 
