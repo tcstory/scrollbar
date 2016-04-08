@@ -5,8 +5,11 @@
 function createScrollBar(opts) {
     "use strict";
 
-    if (typeof opts.wrapper === 'undefined' || typeof opts.target === 'undefined') {
+    if (typeof opts.target === 'undefined') {
         throw new Error('缺少必填参数')
+    } else if (typeof opts.wrapper === 'undefined') {
+        var target = opts.target;
+        target.addEventListener('wheel', handleWheel1)
     } else {
         var wrapper = opts.wrapper;
         var target = opts.target;
@@ -18,7 +21,7 @@ function createScrollBar(opts) {
         var slider = document.createElement('div');
         slider.className = 'slider__tc' + timestamp;
         scrollBar.appendChild(slider);
-        target.addEventListener('wheel', handleWheel);
+        target.addEventListener('wheel', handleWheel2);
 
         injectCSS(timestamp, opts);
     }
@@ -32,7 +35,13 @@ function createScrollBar(opts) {
         }, 50);
     }
 
-    function handleWheel(ev) {
+    function handleWheel1(ev) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        target.scrollTop += ev.deltaY;
+    }
+
+    function handleWheel2(ev) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
         activateScrollBar();
@@ -67,7 +76,7 @@ function createScrollBar(opts) {
             'position: absolute;' +
             'right: .25rem;' +
             'top: .25rem;' +
-            'visibility:' + opts.showScrollBar +';'+
+            'visibility:' + opts.showScrollBar + ';' +
             '}' +
             '.scrollBar__tc' + timestamp + '.active {' +
             'opacity: 1;' +
