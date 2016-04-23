@@ -57,6 +57,8 @@ createScrollBar({
 
 `showScrollBar`:  是否显示滚动条,值为`true`或则是`false`,默认显示滚动条
 
+`touch`: 是否支持触屏,值为`true`或则是`false`,默认不添加触屏事件
+
 
   [1]: http://7xleea.com1.z0.glb.clouddn.com/scrollbar/745b9ff8-e989-4f21-b570-60b402680ab7.gif
 

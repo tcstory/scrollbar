@@ -9,7 +9,13 @@ function createScrollBar(opts) {
         throw new Error('缺少必填参数')
     } else if (typeof opts.wrapper === 'undefined') {
         var target = opts.target;
-        target.addEventListener('wheel', handleWheel1)
+        target.addEventListener('wheel', handleWheel1);
+        if (opts.touch) {
+            target.addEventListener('touchstart', function (ev) {
+                handleTouchMove1.curPos = ev.targetTouches[0].clientY;
+            });
+            target.addEventListener('touchmove', handleTouchMove1);
+        }
     } else {
         var wrapper = opts.wrapper;
         var target = opts.target;
@@ -22,7 +28,12 @@ function createScrollBar(opts) {
         slider.className = 'slider__tc' + timestamp;
         scrollBar.appendChild(slider);
         target.addEventListener('wheel', handleWheel2);
-
+        if (opts.touch) {
+            target.addEventListener('touchstart', function (ev) {
+                handleTouchMove2.curPos = ev.targetTouches[0].clientY;
+            });
+            target.addEventListener('touchmove', handleTouchMove2);
+        }
         injectCSS(timestamp, opts);
     }
 
@@ -48,6 +59,34 @@ function createScrollBar(opts) {
         var distance = target.scrollHeight - target.clientHeight;
         var scrollTop = target.scrollTop;
         target.scrollTop = scrollTop + ev.deltaY;
+        slider.style.height = Math.ceil((scrollTop / distance) * 100) + '%';
+    }
+
+    function handleTouchMove1(ev) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        if((ev.targetTouches[0].clientY - handleTouchMove1.curPos) > 0) {
+            var deltaY = 30;
+        } else {
+            var deltaY = -30;
+        }
+        handleTouchMove1.curPos = ev.targetTouches[0].clientY;
+        target.scrollTop -= deltaY;
+    }
+
+    function handleTouchMove2(ev) {
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        activateScrollBar();
+        if((ev.targetTouches[0].clientY - handleTouchMove2.curPos) > 0) {
+            var deltaY = 30;
+        } else {
+            var deltaY = -30;
+        }
+        handleTouchMove2.curPos = ev.targetTouches[0].clientY;
+        var distance = target.scrollHeight - target.clientHeight;
+        var scrollTop = target.scrollTop;
+        target.scrollTop = scrollTop - deltaY;
         slider.style.height = Math.ceil((scrollTop / distance) * 100) + '%';
     }
 
