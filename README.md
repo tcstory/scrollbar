@@ -40,6 +40,7 @@ createScrollBar({
 
 **注意**
 1. 一定要给`list-wrapper`设置固定的`height`和`width`,并且`position`为`relative`
+
 2. `list`的`width`和`height`都要设置为100%,并且`overflow:hidden`
 
 ### 参数

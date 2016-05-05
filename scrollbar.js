@@ -35,6 +35,7 @@ function createScrollBar(opts) {
             target.addEventListener('touchmove', handleTouchMove2);
         }
         injectCSS(timestamp, opts);
+        scrollBar.addEventListener('click', handleClick);
     }
 
 
@@ -44,6 +45,16 @@ function createScrollBar(opts) {
         activateScrollBar.timeId = setTimeout(function () {
             scrollBar.classList.remove('active');
         }, 50);
+    }
+
+    function handleClick(ev) {
+        var scrollBar = ev.currentTarget;
+        var height = parseFloat(getComputedStyle(scrollBar, null).height);
+        var diff = ev.clientY - scrollBar.getBoundingClientRect().top;
+        var percentage = diff / height;
+        target.scrollTop = percentage * (target.scrollHeight - target.clientHeight);
+        slider.style.height = percentage * 100 + '%';
+        activateScrollBar();
     }
 
     function handleWheel1(ev) {
@@ -57,15 +68,14 @@ function createScrollBar(opts) {
         ev.stopImmediatePropagation();
         activateScrollBar();
         var distance = target.scrollHeight - target.clientHeight;
-        var scrollTop = target.scrollTop;
-        target.scrollTop = scrollTop + ev.deltaY;
-        slider.style.height = Math.ceil((scrollTop / distance) * 100) + '%';
+        target.scrollTop = target.scrollTop + ev.deltaY;
+        slider.style.height = Math.ceil((target.scrollTop / distance) * 100) + '%';
     }
 
     function handleTouchMove1(ev) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
-        if((ev.targetTouches[0].clientY - handleTouchMove1.curPos) > 0) {
+        if ((ev.targetTouches[0].clientY - handleTouchMove1.curPos) > 0) {
             var deltaY = 30;
         } else {
             var deltaY = -30;
@@ -78,7 +88,7 @@ function createScrollBar(opts) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
         activateScrollBar();
-        if((ev.targetTouches[0].clientY - handleTouchMove2.curPos) > 0) {
+        if ((ev.targetTouches[0].clientY - handleTouchMove2.curPos) > 0) {
             var deltaY = 30;
         } else {
             var deltaY = -30;
@@ -104,6 +114,7 @@ function createScrollBar(opts) {
     function injectCSS(timestamp, opts) {
         var sliderStyleText =
             '.scrollBar__tc' + timestamp + ' {' +
+            'cursor: pointer;' +
             'background-color:' + opts.backgroundColor + ';' +
             'border-radius: .25rem;' +
             'opacity:' + opts.opacity + ';' +
